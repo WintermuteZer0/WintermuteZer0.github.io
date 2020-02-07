@@ -60,7 +60,7 @@ plugins:
 author:
   name   : "Wintermute"
   avatar : "/assets/images/avatar.jpg"
-  bio    : "Blue Teamer || Researcher"
+  bio    : "Blue Teamer | || Researcher"
   links:
     - label: "Website"
       icon: "fas fa-fw fa-link"
