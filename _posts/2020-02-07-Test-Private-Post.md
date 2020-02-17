@@ -1,10 +1,13 @@
 ---
-title: TestPOst 2020 - Should not be posted 
+title: Binary Diffing - Searching for Exploits in Patch Tuesdays (Part 1) 
 categories:
   - Blog
 tags:
-  - Test
+  - Reversing
+  - Exploits
 published: false
 ---
 
-Test post - should not be published yet.
+In an attempt to better understand and practice binary diffing I decided to write some posts walking through the process of analysing Windows patch tuesday updates to examine the code differences.
+
+TLDR; This is a common method of understandin patched vulnerabilities in OS libraries and is well understood in the research community. My aim here is to provide 
