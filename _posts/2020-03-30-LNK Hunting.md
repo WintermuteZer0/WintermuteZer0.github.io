@@ -20,7 +20,8 @@ or fully self serving payloads.
 
 
 
-```rule lnk_simple_poc{
+```
+rule lnk_simple_poc{
 strings:
 //LNK Format
   $lnk = {4C 00 00 00 01 14 02 00}
