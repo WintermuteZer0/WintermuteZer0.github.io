@@ -20,7 +20,7 @@ or fully self serving payloads.
 
 
 
-rule lnk_simple_poc{
+```rule lnk_simple_poc{
 strings:
 //LNK Format
   $lnk = {4C 00 00 00 01 14 02 00}
@@ -34,7 +34,7 @@ strings:
   $cmd6 = "http" ascii wide
 condition:
   ($lnk at 0) and any of $cmd*
-}
+}```
 
 Deploying this using VT Hunt and Retro hunt allows us to find previous samples and alert on new incoming samples (provided you have goof fortune to have an enterprise license)
 Quick run in retro hunt shows around 10000 matches for 90 days worth of data, however today an interesting sample flagged in live hunt email notifications.
