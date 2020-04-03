@@ -58,5 +58,26 @@ The following can be observed:
  - Decodes the extracted text using -decoded flag for disguised certutil.exe
  - Utilised the expand.exe binary to expand the contents of the newly decoded file (hints that this is a archive file, likely CAB)
  - Run a javascript file named '9sOXN6Ltf0afe7.js' using wscript (file likley extracted from the archive previously expanded)
-
+Viewing the decoded file confirms this is an archive CAB file usually utilised as part of Windows update mechanisms. This can be viewed using any archive browser (7zip etc.) or expanded manually using the expand utility as the sample does:
+![decoded_cab](../assets/images/2020-03-30-LNK_Hunting/decoded_payload.png)
 ![cab_view](../assets/images/2020-03-30-LNK_Hunting/cab_view.png) ![cab_expand](../assets/images/2020-03-30-LNK_Hunting/expand_cab.png)
+
+After expanding the CAB file we see the following 3 files extracted adn droped to disk:
+ - 9sOXN6Ltf0afe7.js
+ - 20200308-sitrep-48-covid-19-.pdf.lnk
+ - cSi1r0uywDNvDu.tmp
+
+ Inspection of the javascript file shows further execution and payload delivery:
+  - creates wscript shell object for execution
+  - makes a new directory under %tmp%
+  - copies cscript.exe from system32 into the new directory (utilising the same for loop execution as before)
+  - renames the file cSi1r0uywDNvDu.tmp to WsmPty.xsl , and XSL stylesheet format
+  - executes the windows winrm.vbs file via cscript which in turn indirectly calls the code contained in the dropped stylesheet [LOLBAS - winrm.vbs](https://lolbas-project.github.io/lolbas/Scripts/Winrm/)
+  - deletes the XSL stylesheet file from disk
+  - opens the pdf file dropped to disk
+   ![xsl_payload](../assets/images/2020-03-30-LNK_Hunting/second_payload_xsl.png)
+
+Inspection of the xsl stylesheet shows some obfuscated VBScript code which is the next challenge. The code (obfuscation aside) appears to invoke a function with the embedded string value, this is then further deobfuscated using a 2 step for loop, converstion between ascci character, ascii codes and XOR'd with 1 to create an ultimate output value.
+
+Creation of simple deobfucation script in python allows the examination of the final output:
+![python_deobfuscation](../assets/images/2020-03-30-LNK_Hunting/decoded_python.png)
