@@ -48,7 +48,7 @@ Filename: **'20200308-sitrep-48-covid19.pdf.lnk'**
  - File size 1.11 MB (1160121 bytes)
 
 The LNK binary structure is (fairly) straight forward (link here) and so the easiest point to start with is examining the strings within the shell shortcut.
-![String output](/assets/images/2020-03-30-LNK_Hunting/strings.png)
+![](/assets/images/2020-03-30-LNK_Hunting/strings.png)
 
 The following can be observed:
  - cmd.exe execution
