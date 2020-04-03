@@ -48,7 +48,7 @@ Filename: **'20200308-sitrep-48-covid19.pdf.lnk'**
  - File size 1.11 MB (1160121 bytes)
 
 The LNK binary structure is (fairly) straight forward (link here) and so the easiest point to start with is examining the strings within the shell shortcut.
-[[]][]
+[](../assets/images/2020-03-30-LNK_Hunting/strings.png)
 
 The following can be observed:
  - cmd.exe execution
@@ -58,3 +58,5 @@ The following can be observed:
  - Decodes the extracted text using -decoded flag for disguised certutil.exe
  - Utilised the expand.exe binary to expand the contents of the newly decoded file (hints that this is a archive file, likely CAB)
  - Run a javascript file named '9sOXN6Ltf0afe7.js' using wscript (file likley extracted from the archive previously expanded)
+
+[[]][]
