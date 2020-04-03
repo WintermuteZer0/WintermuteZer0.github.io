@@ -59,8 +59,8 @@ The following can be observed:
  - Utilised the expand.exe binary to expand the contents of the newly decoded file (hints that this is a archive file, likely CAB)
  - Run a javascript file named '9sOXN6Ltf0afe7.js' using wscript (file likely extracted from the archive previously expanded)
 Viewing the decoded file confirms this is an archive CAB file usually utilised as part of Windows update mechanisms. This can be viewed using any archive browser (7zip etc.) or expanded manually using the expand utility as the sample does:
-![](../assets/images/2020-03-30-LNK_Hunting/decoded_payload.png)
-![](../assets/images/2020-03-30-LNK_Hunting/cab_view.png) ![](../assets/images/2020-03-30-LNK_Hunting/expand_cab.png)
+![](/assets/images/2020-03-30-LNK_Hunting/decoded_payload.png)
+![](/assets/images/2020-03-30-LNK_Hunting/cab_view.png) ![](/assets/images/2020-03-30-LNK_Hunting/expand_cab.png)
 
 After expanding the CAB file we see the following 3 files extracted and dropped to disk:
  - 9sOXN6Ltf0afe7.js
@@ -75,13 +75,13 @@ After expanding the CAB file we see the following 3 files extracted and dropped 
   - executes the windows winrm.vbs file via cscript which in turn indirectly calls the code contained in the dropped stylesheet [](https://lolbas-project.github.io/lolbas/Scripts/Winrm/)
   - deletes the XSL stylesheet file from disk
   - opens the pdf file dropped to disk
-   ![](../assets/images/2020-03-30-LNK_Hunting/second_payload_xsl.png)
+   ![](/assets/images/2020-03-30-LNK_Hunting/second_payload_xsl.png)
 
 Inspection of the XSL stylesheet shows some obfuscated VBScript code which is the next challenge. The code looks to invoke a function with the embedded visible string value, which is then further deobfuscated using a 2 step for loop, while conversion between assci character, ascii codes and XOR'd with 1 to create an ultimate output value.
 
-![](../assets/images/2020-03-30-LNK_Hunting/xsl_vbscript_payload.png)
+![](/assets/images/2020-03-30-LNK_Hunting/xsl_vbscript_payload.png)
 
 Creation of simple deobfucation script in python allows the examination of the final output:
-![](../assets/images/2020-03-30-LNK_Hunting/decoded_python.png)
+![](/assets/images/2020-03-30-LNK_Hunting/decoded_python.png)
 
 Strangely in this case the output appears to be what looks like a CTF flag :) This sample may either be a testing sample being uploaded to VT for detection analysis or there is further work required to understand exactly what is happening. There may be further code execution on the system based on the contents of the PDF file which is opened or this may just be a decoy. TBC....
