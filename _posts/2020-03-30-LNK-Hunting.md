@@ -8,7 +8,7 @@ tags:
   - Malware
   - Research
 
-published: true
+published: false
 ---
 
 LNK Shortcut files present an interesting attack vector for initial access during malware campaigns. The description and icon of the
