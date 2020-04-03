@@ -57,17 +57,17 @@ The following can be observed:
  - Uses findstr.exe to loacted and extract an appended base64 string contained within the LNK file starting with the string 'TVNDRgAAAA' into a .tmp file
  - Decodes the extracted text using -decoded flag for disguised certutil.exe
  - Utilised the expand.exe binary to expand the contents of the newly decoded file (hints that this is a archive file, likely CAB)
- - Run a javascript file named '9sOXN6Ltf0afe7.js' using wscript (file likley extracted from the archive previously expanded)
+ - Run a javascript file named '9sOXN6Ltf0afe7.js' using wscript (file likely extracted from the archive previously expanded)
 Viewing the decoded file confirms this is an archive CAB file usually utilised as part of Windows update mechanisms. This can be viewed using any archive browser (7zip etc.) or expanded manually using the expand utility as the sample does:
 ![decoded_cab](../assets/images/2020-03-30-LNK_Hunting/decoded_payload.png)
 ![cab_view](../assets/images/2020-03-30-LNK_Hunting/cab_view.png) ![cab_expand](../assets/images/2020-03-30-LNK_Hunting/expand_cab.png)
 
-After expanding the CAB file we see the following 3 files extracted adn droped to disk:
+After expanding the CAB file we see the following 3 files extracted and dropped to disk:
  - 9sOXN6Ltf0afe7.js
  - 20200308-sitrep-48-covid-19-.pdf.lnk
  - cSi1r0uywDNvDu.tmp
 
- Inspection of the javascript file shows further execution and payload delivery:
+ Inspection of the javascript file shows a further execution chain and another payload delivery:
   - creates wscript shell object for execution
   - makes a new directory under %tmp%
   - copies cscript.exe from system32 into the new directory (utilising the same for loop execution as before)
@@ -75,9 +75,13 @@ After expanding the CAB file we see the following 3 files extracted adn droped t
   - executes the windows winrm.vbs file via cscript which in turn indirectly calls the code contained in the dropped stylesheet [LOLBAS - winrm.vbs](https://lolbas-project.github.io/lolbas/Scripts/Winrm/)
   - deletes the XSL stylesheet file from disk
   - opens the pdf file dropped to disk
-   ![xsl_payload](../assets/images/2020-03-30-LNK_Hunting/second_payload_xsl.png)
+   ![2nd_payload](../assets/images/2020-03-30-LNK_Hunting/second_payload_xsl.png)
 
-Inspection of the xsl stylesheet shows some obfuscated VBScript code which is the next challenge. The code (obfuscation aside) appears to invoke a function with the embedded string value, this is then further deobfuscated using a 2 step for loop, converstion between ascci character, ascii codes and XOR'd with 1 to create an ultimate output value.
+Inspection of the XSL stylesheet shows some obfuscated VBScript code which is the next challenge. The code looks to invoke a function with the embedded visible string value, which is then further deobfuscated using a 2 step for loop, while conversion between assci character, ascii codes and XOR'd with 1 to create an ultimate output value.
+
+![xsl_payload](../assets/images/2020-03-30-LNK_Hunting/xsl_vbscript_payload.png)
 
 Creation of simple deobfucation script in python allows the examination of the final output:
 ![python_deobfuscation](../assets/images/2020-03-30-LNK_Hunting/decoded_python.png)
+
+Strangely in this case the output appears to be what looks like a CTF flag :) This sample may either be a testing sample being uploaded to VT for detection analysis or there is further work required to understand exactly what is happening. There may be further code execution on the system based on the contents of the PDF file which is opened or this may just be a decoy. TBC....
