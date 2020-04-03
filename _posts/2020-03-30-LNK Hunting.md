@@ -8,22 +8,21 @@ tags:
   - Malware
   - Research
 
-published: false
+published: true
 ---
 
 LNK Shortcut files present an interesting attack vector for initial access during malware campaigns. The description and icon of the
 LNK files can be modified to trick users alongside the initial phishing context, allowing LNK files to serve as first stage droppers
 or fully self serving payloads.
-
+I put together a simple YARA rule for hunting for LNK samples on virus total consisting of the following:
 ```
 rule lnk_simple_poc{
 strings:
 //LNK Format
   $lnk = {4C 00 00 00 01 14 02 00}
-
 //OPTIONS
   $cmd1 = "bitsadmin" ascii wide
-  $cmd2 = "ertutil" ascii wide
+  $cmd2 = "certutil" ascii wide
   $cmd3 = "wscript" ascii wide
   $cmd4 = "cscript" ascii wide
   $cmd5 = "powershell" ascii wide
@@ -32,6 +31,7 @@ condition:
   ($lnk at 0) and any of $cmd*
 }
 ```
+The initial hex sequence is the combination signature of magic bytes which identify LNK shell short files and the remaining strings are looking for some common downloader/execution lolbins in the shell shortcut target.
 
 Deploying this using VT Hunt and Retro hunt allows us to find previous samples and alert on new incoming samples (provided you have goof fortune to have an enterprise license)
 Quick run in retro hunt shows around 10000 matches for 90 days worth of data, however today an interesting sample flagged in live hunt email notifications.
