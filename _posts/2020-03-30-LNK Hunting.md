@@ -59,4 +59,4 @@ The following can be observed:
  - Utilised the expand.exe binary to expand the contents of the newly decoded file (hints that this is a archive file, likely CAB)
  - Run a javascript file named '9sOXN6Ltf0afe7.js' using wscript (file likley extracted from the archive previously expanded)
 
-[[]][]
+![cab_view](../assets/images/2020-03-30-LNK_Hunting/cab_view.png) ![cab_expand](../assets/images/2020-03-30-LNK_Hunting/expand_cab.png)
