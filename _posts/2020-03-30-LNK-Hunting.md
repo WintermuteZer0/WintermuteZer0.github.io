@@ -8,7 +8,7 @@ tags:
   - Malware
   - Research
 
-published: false
+published: true
 ---
 
 LNK Shortcut files present an interesting attack vector for initial foothold during malware campaigns. The description, icon and ultimate shell target command of the .lnk file can be modified to mislead users combined with the initial phishing context, allowing LNK files to serve as droppers or fully self contained payloads.
