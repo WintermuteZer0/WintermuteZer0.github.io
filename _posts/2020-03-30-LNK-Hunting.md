@@ -45,7 +45,7 @@ Filename: **'20200308-sitrep-48-covid19.pdf.lnk'**
  - Magic MS Windows shortcut
  - File size 1.11 MB (1160121 bytes)
 
-The .lnk file binary format is (fairly) straight forward ([](https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-shllink/16cb4ca1-9339-4d0c-a68d-bf1d6cc0f943)) so the easiest point to start with is examining strings within the file which should contain the target command.
+The .lnk file binary format is (fairly) straight forward ([LNK File Format](https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-shllink/16cb4ca1-9339-4d0c-a68d-bf1d6cc0f943)) so the easiest point to start with is examining strings within the file which should contain the target command.
 ![](/assets/images/2020-03-30-LNK_Hunting/strings.png)
 
 The following can be observed:
