@@ -29,7 +29,7 @@ condition:
   ($lnk at 0) and any of $cmd*
 }
 ```
-The initial hex sequence is a combination of the .lnk defined header size field and the lnk CLSID field bytes which combined can identify .lnk shell shortcut files, the remaining strings are basic searches for some common downloader/execution lolbins in the shortcut target.
+The initial hex sequence is a combination of the .lnk defined header size field and the lnk CLSID field bytes which combined can identify .lnk shell shortcut files whilst the remaining simple string searches are for some common downloader/execution windows binaries as the shortcut target.
 
 Deploying this using VT Hunt and Retro hunt allows us to find previous samples and alert on new incoming samples (provided you have an enterprise license)
 Running in retro hunt shows around 10000 matches for 90 days worth of data, however an interesting sample flagged in live hunt notifications.
