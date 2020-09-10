@@ -48,7 +48,7 @@ We're then greeted with a another prompt for an answer which we can see from the
 
 At this point we have made it to the third question and this time the input is being compared directly with a hardcoded value of '0xdae110c8' thus controlling the conditional CMP/JNE instruction combination which allows us to reach the 'print_flag' function call or not.
 
-The value is being compared directly with the offset EBP-0x10 on the stack. This is interesting because since if we look back, our previous input answer to this question is loaded (as all others were) at offset EBP-0x3b on the stack. This gives us a nice opportunity to again overflow the stack variable on our final answer, overwrite the location to ensure it contains the expected value and get our flag!
+The value is being compared directly with the offset EBP-0x10 on the stack. This is interesting since if we look back, our previous input answer to this question is loaded (as all others were) at offset EBP-0x3b on the stack. This gives us a nice opportunity to again overflow the stack variable on our final answer, overwrite the location to ensure it contains the expected value and get our flag!
 
 ![](/assets/images/stacksmashing02_nightmare_04_tamu19_pwn1/stack_diagram.png)
 
