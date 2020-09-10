@@ -27,11 +27,11 @@ Utilising PEDA (link), which provides an enhanced set of tools within GDB for de
 Given we have symbols, we can take a look at the main functions simply by dumping the disassembly in GDB:
 ![](/assets/images/stacksmashing01_nightmare_04_csaw_boi/main_dump.png)
 
-It's can be observed that the following is occurring:
+It can be observed that the following is occurring:
  - Basic function prologue
  - Stack variable setup
- - Syscall to 'puts'
- - Syscall to 'read'
+ - Function call to 'puts'
+ - Function call to to 'read'
  - Resultant jump locations both land at 'run_cmd' function with different inputs
  - Epilogue and exit
 
