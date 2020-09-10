@@ -11,10 +11,12 @@ published: false
 ## **File** 04-bof_variable/tmau19_pwn1
 
 ## **File Analysis**
-Basic analysis of the file confirms it is an 64 bit ELF file and again in this case shows us that it is not stripped therefore symbols are again available.
+File details confirm it is an 64 bit ELF file and symbols are available.
+
 ![](/assets/images/stacksmashing02_nightmare_04_tamu19_pwn1/file_details.png)
 
-Running the file presents us a basic prompt for input which on testing errors and exits out. This give us a clue that the binary expects a certain input answer.
+Running the file presents us a basic prompt for input. Feeding with test data displays an error message and exits out. This gives us a clue that the binary expects a certain input answer.
+
 ![](/assets/images/stacksmashing02_nightmare_04_tamu19_pwn1/basic_run.png)
 
 ## **Basic Reverse Engineering**
@@ -30,8 +32,8 @@ From looking at the overall logic, we can see that several inputs are required t
 
 ![](/assets/images/stacksmashing02_nightmare_04_tamu19_pwn1/main_pt1.png)
 
-First Answer
-Checking out the first chain of function calls, we see an 'fgets' followed by 'strncmp'. The value read in by 'fgets' is in this case stored in the location EBP-0x3b as is shown in the ```LEA EAX, [EBp-0x3b]; PUSH EAX;``` set of instructions (based on CDECL calling conventions) being the second parameter to the 'fgets' function call.
+## First Answer
+Checking out the first chain of function calls, we see an 'fgets' followed by 'strncmp'. The value read in by 'fgets' is in this case stored in the location EBP-0x3b as is shown in the ```LEA EAX, [EBP-0x3b]; PUSH EAX;``` set of instructions (based on CDECL calling conventions) being the second parameter to the 'fgets' function call.
 
 The following block of instructions sets up the variables for the function 'strncmp' which is comparing a saved string value to that which was passed in via the user. The value here is located at offset EBX-0x159f. We can place a quick breakpoint on the previous instruction and  when reached, print the string value contained at the offset giving us our first answer!
 
@@ -39,10 +41,10 @@ The following block of instructions sets up the variables for the function 'strn
 
 ![](/assets/images/stacksmashing02_nightmare_04_tamu19_pwn1/main_pt2.png)
 
+## Second Answer
 We're then greeted with a another prompt for an answer which we can see from the corresponding instruction blocks contains subsequent calls to 'fgets' again followed by 'strncmp', this time with a saved value at offset EBX-0x154d. Following the same routine as above we can print this value using GDB by placing a break point on the instruction just before and view the saved string value the binary expects. We now have our second answer!
 
 ![](/assets/images/stacksmashing02_nightmare_04_tamu19_pwn1/second_answer.png)
-
 
 At this point we have made it to the third question and this time the input is being compared directly with a hardcoded value of '0xdae110c8' thus controlling the conditional CMP/JNE instruction combination which allows us to reach the 'print_flag' function call or not.
 
@@ -59,10 +61,11 @@ from pwn import *
 
 pty = process.PTY
 target = process('./pwn1',stdin=pty, stdout=pty)
+
 #Setup responses
 string1='Sir Lancelot of Camelot'
 string2='To seek the Holy Grail.'
-#Final exploit responde to overwrite stack location with our controlled value
+#Final exploit response to overwrite stack location with our controlled value
 string3=b'A'*43+p32(0xdea110c8)
 
 # Start the target process
