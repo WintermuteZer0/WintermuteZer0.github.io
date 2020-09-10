@@ -5,7 +5,7 @@ categories:
 tags:
   - Reversing
   - Exploits
-published: false
+published: true
 ---
 
 ## **File** 04-bof_variable/tmau19_pwn1
