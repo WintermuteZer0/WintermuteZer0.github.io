@@ -5,7 +5,7 @@ categories:
 tags:
   - Reversing
   - Exploits
-published: false
+published: true
 ---
 In this series I plan to run through the Nightmare set of binary challenges kindly created at https://github.com/guyinatuxedo/nightmare for my own fun and
 
@@ -51,3 +51,4 @@ Exploit:
 In this example, for the exploit to succeed we have to send the appropriate amount of data (0x14 bytes) followed by our overwrite payload value of '0xcaf3baee' and we should ensure the binary takes the conditional branch to start '/bin/bash'. We can utilise the interactive function of pwntools to connect and confirm the shell.
 
 ![](/assets/images/stacksmashing01_nightmare_04_csaw_boi/exploit.png)
+![](/assets/images/stacksmashing01_nightmare_04_csaw_boi/exploit_run.png)
