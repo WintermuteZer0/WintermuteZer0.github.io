@@ -9,9 +9,9 @@ published: true
 ---
 In this series I plan to run through the Nightmare set of binary challenges kindly created at https://github.com/guyinatuxedo/nightmare for my own fun and continued learning.
 
-## **File:** 04-bof_variable/csaw18_boi
+## **File** 04-bof_variable/csaw18_boi
 
-## **File Analysis:**
+## **File Analysis**
 Basic analysis of the file confirms it is an 64 bit ELF file and importantly in this cases shows us that it is not stripped meaning symbols are available and makes debugging and reversing easier for us.
 ![](/assets/images/stacksmashing01_nightmare_04_csaw_boi/file_check.png)
 Symbols can be confirmed via 'readelf -s boi' which outputs the symbol list and corresponding offsets.
@@ -19,7 +19,7 @@ Symbols can be confirmed via 'readelf -s boi' which outputs the symbol list and 
 Running the file presents us a basic prompt for input which on testing returns the current date time as output.
 ![](/assets/images/stacksmashing01_nightmare_04_csaw_boi/prompt.png)
 
-## **Basic RE:**
+## **Basic Reverse Engineering**
 Utilising PEDA (link), which provides an enhanced set of tools within GDB for debugging, we can start to inspect the binary. The 'checksec' command give us a quick overview of the binary protections enabled:
 
 ![](/assets/images/stacksmashing01_nightmare_04_csaw_boi/checksec.png)
@@ -48,7 +48,7 @@ Inspecting the location of the target value (rbp-0x1c) we can see that this is w
 
 ![](/assets/images/stacksmashing01_nightmare_04_csaw_boi/exploit_basic.png)
 
-## **Exploit:**
+## **Exploit**
 
 In this example, for the exploit to succeed we have to send the appropriate amount of data (0x14 bytes) followed by our overwrite payload value of '0xcaf3baee' and we should ensure the binary takes the conditional branch to start '/bin/bash'. We can utilise the interactive function of pwntools to connect and confirm the shell.
 
