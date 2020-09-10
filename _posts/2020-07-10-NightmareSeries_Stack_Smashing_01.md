@@ -7,7 +7,7 @@ tags:
   - Exploits
 published: true
 ---
-In this series I plan to run through the Nightmare set of binary challenges kindly created at https://github.com/guyinatuxedo/nightmare for my own fun and
+In this series I plan to run through the Nightmare set of binary challenges kindly created at https://github.com/guyinatuxedo/nightmare for my own fun and continued learning.
 
 File: 04-bof_variable/csaw18_boi
 
@@ -21,6 +21,7 @@ Running the file presents us a basic prompt for input which on testing returns t
 
 Basic RE:
 Utilising PEDA (link), which provides an enhanced set of tools within GDB for debugging, we can start to inspect the binary. The 'checksec' command give us a quick overview of the binary protections enabled:
+
 ![](/assets/images/stacksmashing01_nightmare_04_csaw_boi/checksec.png)
 
 Given we have symbols, we can take a look at the main functions simply by dumping the disassembly in GDB:
@@ -38,6 +39,7 @@ From the events within the main function we see that the user is prompted for in
 
 This is further confirmed when dumping the contents of the 'run_cmd' function:
 ![](/assets/images/stacksmashing01_nightmare_04_csaw_boi/run_cmd_dump.png)
+
 The value passed as a function parameter is then passed to the system syscall and executed. So our goal is to now ensure that the conditional branch takes the route of run_cmd('/bin/bash') and we have a shell!
 
 In order to achieve this, we can overflow the saved stack value and overwrite the saved value. The read function reads in a total of 0x18 bytes from the user input onto the stack variable located at rbp-0x30 which is an int (2 bytes)
